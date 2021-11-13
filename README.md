@@ -22,3 +22,6 @@ day006:
 
 day007：
 函数一等公民,可变参数，延迟执行defer
+
+channel:
+channel的使用以及数据结构
