@@ -31,7 +31,7 @@ func TestString(t *testing.T) {
 	t.Log(len(s3)) //3 len()输出的是byte数量而不是字符数量
 
 	c := []rune(s3) //可以得到字符串的unicode
-	t.Log(len(c))
+	t.Log(len(c))   //1
 	t.Log("rune size", unsafe.Sizeof(c[0]))
 	t.Logf("'中'的 unicode 是 %x", c[0])
 	t.Logf("'中'的 UTF8 是 %x", s3)
@@ -39,7 +39,16 @@ func TestString(t *testing.T) {
 
 func TestStringToRune(t *testing.T) {
 	s := "中华人民共和国"
-	for _, c := range s {
-		t.Logf("%[1]c %[1]x", c)
+	for i, c := range s { //range每次取的是rune而不是byte
+		t.Logf("%d %[2]c %[2]x", i, c)
+	}
+
+	for i := 0; i < len(s); i++ { //string 是只读的slice，[]byte
+		t.Logf("%d %[2]c %[2]x", i, s[i]) //这里每个汉字占3byte，所以len（s）=21
+	}
+
+	c := []rune(s) //转换成rune后，得到每个汉字的unicode
+	for i := 0; i < len(c); i++ {
+		t.Logf("%d %[2]c %[2]x", i, c[i])
 	}
 }
